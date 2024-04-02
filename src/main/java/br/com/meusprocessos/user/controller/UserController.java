@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.meusprocessos.user.model.User;
+import br.com.meusprocessos.user.model.UserFieldUpdateRequest;
 import br.com.meusprocessos.user.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,9 +51,10 @@ public class UserController {
         return ResponseEntity.ok().body(service.createUser(user));
     }
 
-    @PutMapping
-    public ResponseEntity<Object> editUserEmail(@RequestBody User user) {
-        return ResponseEntity.ok().body(service.editUserPassword(user.getId(), user.getPassword()));
+    @PutMapping("/{id}/{field}")
+    public ResponseEntity<Object> editUserFields(@PathVariable Long id, @PathVariable String field,
+            @RequestBody UserFieldUpdateRequest newValue) {
+        return ResponseEntity.ok().body(service.editUserField(id, field, newValue));
     }
 
 }
